@@ -14,6 +14,7 @@ class CreatePageRoleTable extends Migration
     public function up()
     {
         Schema::create('page_role', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('page_id')->unsigned();
             $table->foreign('page_id')->references('id')->on('pages');
             $table->integer('role_id')->unsigned();

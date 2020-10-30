@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
-use Auth;
-use App\Model\Page;
+
+use App\Models\Page;
 use Closure;
+use Auth;
 
 class GenerateMenus
 {
@@ -16,29 +17,23 @@ class GenerateMenus
      */
     public function handle($request, Closure $next)
     {
+
+
+        //   dd($roles->pluck('id')->toArray());
         \Menu::make('MyNavBar', function ($menu) {
 
             $menu->group(array('prefix' => '/'), function ($m) {
 
                 $user = Auth::user();
-                dd($user);
                 if ($user->hasRole('admin'))
                     $pages = Page::all(); //access all pages
                 else {
                     /*other user pages */
-                    $role =  $user->roles->first(); // Returns a collection
+                    $role = $user->roles->first(); // Returns a collection
                     $pages = $role->pages;
                 }
 
-
                 $this->build_tree($m, $pages);
-                //           $menu->add('Home');
-                //           $menu->add('About', 'about');
-                //            // refer to about as a property of $menu object then call `add()` on it
-                // $menu->about->add('employee', 'employee');
-                // $menu->employee->add('Who We are', 'who-we-are');
-                //           $menu->add('Services', 'services');
-                //           $menu->add('Contact', 'contact');
             });
         });
 
@@ -48,15 +43,13 @@ class GenerateMenus
     function build_tree($menu, $arrs, $parent_id = 0, $level = 0)
     {
         foreach ($arrs as $arr) {
-            //   print_r($arr);
             if ($arr['parent_id'] == $parent_id) {
-
                 if ($arr['parent_id'] > 0) {
                     $parentobj = Page::select('title')->where('id', '=', $parent_id)->first();
                     $ptitle = strtolower($parentobj->title);
-                    $menu->get($ptitle)->add($arr['title'], $arr['link'])->attr(['slug' => $arr['slug']]);
+                    $menu->get($ptitle)->add($arr['title'], $arr['link']);
                 } else
-                    $menu->add($arr['title'], $arr['link'])->attr(['slug' => $arr['slug']]);
+                    $menu->add($arr['title'], $arr['link']);
 
 
                 // echo str_repeat("-", $level)." ".$arr['title']."<br/>";

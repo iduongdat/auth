@@ -14,7 +14,7 @@ class CreateUserHasPagesTable extends Migration
     public function up()
     {
         Schema::create('role_has_pages', function (Blueprint $table) {
-            //$table->increments('id');
+            $table->increments('id');
             $table->integer('role_id');
             $table->integer('page_id');
            // $table->timestamps();

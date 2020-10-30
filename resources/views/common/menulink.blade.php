@@ -1,21 +1,34 @@
+<div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
 
-@foreach($items as $item)
-{{ $item->url }}
-  <li @lm_attrs($item) @if($item->url== Route::currentRouteName()) class="active"   @endif @lm_endattrs>
-    @if($item->link) <a @lm_attrs($item->link) @if($item->hasChildren()) class="menu-toggle" href="javascript:void(0);" @else  href="{!! $item->url() !!}" @endif @lm_endattrs >
-      <span> {!! $item->title !!} </span>
-    
-    </a>
-    @else
-      <span class="navbar-text">{!! $item->title !!}</span>
-    @endif
-    @if($item->hasChildren())
-      <ul class="ml-menu">
-        @include('common.menulink',array('items' => $item->children()))
-      </ul>
-    @endif
-  </li>
-  @if($item->divider)
-  	<li{!! Lavary\Menu\Builder::attributes($item->divider) !!}></li>
-  @endif
-@endforeach
+  <!--begin::Menu Container-->
+  <div id="kt_aside_menu" class="aside-menu my-4 scroll ps ps--active-y" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500" style="height: 878px; overflow: hidden;">
+    <!--begin::Menu Nav-->
+    <ul class="menu-nav">
+      @foreach($items as $item)
+      {{ $item->url }}
+      <li @if($item->hasChildren()) class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" @else @lm_attrs($item) @if($item->url== Route::currentRouteName()) class="menu-item menu-item-active" aria-haspopup="true" @endif class="menu-item menu-item" aria-haspopup="true" @lm_endattrs @endif>
+        @if($item->link) <a @lm_attrs($item->link) @if($item->hasChildren()) href="javascript:;" class="menu-link menu-toggle" @else href="{!! $item->url() !!}" class="menu-link" @endif @lm_endattrs >
+          <span class="svg-icon menu-icon">
+          <i class="ki ki-gear icon-md"></i>
+          </span>
+          <span class="menu-text"> {!! $item->title !!} </span>
+          @if($item->hasChildren())
+          <i class="menu-arrow"></i>
+          @endif
+        </a>
+        @else
+        <span class="navbar-text">{!! $item->title !!}</span>
+        @endif
+        @if($item->hasChildren())
+        @include('common.itemlink',array('items' => $item->children()))
+        @endif
+      </li>
+      @if($item->divider)
+      <li{!! Lavary\Menu\Builder::attributes($item->divider) !!}></li>
+        @endif
+        @endforeach
+    </ul>
+    <!--end::Menu Nav-->
+  </div>
+  <!--end::Menu Container-->
+</div>
