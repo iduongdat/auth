@@ -11,13 +11,13 @@
           <span class="svg-icon menu-icon">
           <i class="ki ki-gear icon-md"></i>
           </span>
-          <span class="menu-text"> {!! $item->title !!} </span>
+          <span class="menu-text"> {!! \App\Models\Page::where(['title_en' => $item->title])->pluck('title')->first(); !!} </span>
           @if($item->hasChildren())
           <i class="menu-arrow"></i>
           @endif
         </a>
         @else
-        <span class="navbar-text">{!! $item->title !!}</span>
+        <span class="navbar-text">{!! \App\Models\Page::where(['title_en' => $item->title])->pluck('title')->first(); !!}</span>
         @endif
         @if($item->hasChildren())
         @include('common.itemlink',array('items' => $item->children()))

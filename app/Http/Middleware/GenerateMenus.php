@@ -45,11 +45,11 @@ class GenerateMenus
         foreach ($arrs as $arr) {
             if ($arr['parent_id'] == $parent_id) {
                 if ($arr['parent_id'] > 0) {
-                    $parentobj = Page::select('title')->where('id', '=', $parent_id)->first();
-                    $ptitle = strtolower($parentobj->title);
-                    $menu->get($ptitle)->add($arr['title'], $arr['link']);
+                    $parentobj = Page::select('title_en')->where('id', '=', $parent_id)->first();
+                    $ptitle = strtolower($parentobj->title_en);
+                    $menu->get($ptitle)->add($arr['title_en'], $arr['link']);
                 } else
-                    $menu->add($arr['title'], $arr['link']);
+                    $menu->add($arr['title_en'], $arr['link']);
 
 
                 // echo str_repeat("-", $level)." ".$arr['title']."<br/>";

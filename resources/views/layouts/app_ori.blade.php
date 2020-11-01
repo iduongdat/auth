@@ -72,7 +72,6 @@
                 </div>
             </div>
         </nav>
-        @include('common.menulink', ['items' => $MyNavBar->roots()])
         <main class="py-4">
             @yield('content')
         </main>
