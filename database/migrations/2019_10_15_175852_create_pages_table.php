@@ -18,6 +18,7 @@ class CreatePagesTable extends Migration
             $table->string('parent_id');
             $table->decimal('page_order', 10, 2)->nullable();
             $table->string('title');
+            $table->string('title_en');
             $table->string('link');
             $table->string('slug');
             $table->timestamps();

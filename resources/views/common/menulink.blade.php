@@ -7,9 +7,9 @@
       @foreach($items as $item)
       {{ $item->url }}
       <li @if($item->hasChildren()) class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" @else @lm_attrs($item) @if($item->url== Route::currentRouteName()) class="menu-item menu-item-active" aria-haspopup="true" @endif class="menu-item menu-item" aria-haspopup="true" @lm_endattrs @endif>
-        @if($item->link) <a @lm_attrs($item->link) @if($item->hasChildren()) href="javascript:;" class="menu-link menu-toggle" @else href="{!! $item->url() !!}" class="menu-link" @endif @lm_endattrs >
+        @if($item->link) <a @lm_attrs($item->link) @if($item->hasChildren()) href="javascript:;" class="menu-link menu-toggle" @else href="/{!! $item->url() !!}" class="menu-link" @endif @lm_endattrs >
           <span class="svg-icon menu-icon">
-          <i class="ki ki-gear icon-md"></i>
+          <i class="{!! \App\Models\Page::where(['title_en' => $item->title])->pluck('icon')->first(); !!} text-icon"></i>
           </span>
           <span class="menu-text"> {!! \App\Models\Page::where(['title_en' => $item->title])->pluck('title')->first(); !!} </span>
           @if($item->hasChildren())

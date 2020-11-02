@@ -19,21 +19,23 @@ class GenerateMenus
     {
 
 
-        //   dd($roles->pluck('id')->toArray());
         \Menu::make('MyNavBar', function ($menu) {
 
             $menu->group(array('prefix' => '/'), function ($m) {
+                if (Auth::check()) {
+                    $user = Auth::user();
+                    if ($user->hasRole('admin'))
+                        $pages = Page::all(); //access all pages
+                    else {
+                        /*other user pages */
+                        $role = $user->roles->first(); // Returns a collection
+                        $pages = $role->pages;
+                    }
 
-                $user = Auth::user();
-                if ($user->hasRole('admin'))
-                    $pages = Page::all(); //access all pages
-                else {
-                    /*other user pages */
-                    $role = $user->roles->first(); // Returns a collection
-                    $pages = $role->pages;
+                    $this->build_tree($m, $pages);
+                } else {
+                    return route('login');
                 }
-
-                $this->build_tree($m, $pages);
             });
         });
 
