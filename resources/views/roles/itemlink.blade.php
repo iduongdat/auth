@@ -5,6 +5,13 @@
     </div>
     <div id="collapse{{$item->id}}" class="collapse" data-parent="#accordionExample" style="">
         <div class="card-body">
+            <div class="checkbox-inline">
+                @foreach($permission as $data)
+                <label class="checkbox">
+                    <input type="checkbox" value="{{$data->id}}" checked="checked" name="Checkboxes5">
+                    <span></span>@if($data->name == 'create') Thêm @elseif($data->name == 'edit') Sửa @elseif($data->name == 'delete') Xóa @elseif($data->name == 'publish') Hiển thị @endif</label>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
